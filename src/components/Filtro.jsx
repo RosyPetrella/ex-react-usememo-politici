@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import PoliticianCard from "./PoliticianCard";
 
 export default function Filtro({ data }) {
   const [ricerca, setRicerca] = useState("");
-  const filteredPolitician = data
-    ? data.filter((politician) =>
-        politician.name.toLowerCase().includes(ricerca.toLowerCase())
-      )
-    : [];
+
+  const filteredPolitician = useMemo(() => {
+    if (!data) return [];
+    return data.filter((politician) =>
+      politician.name.toLowerCase().includes(ricerca.toLowerCase())
+    );
+  }, [data, ricerca]);
 
   return (
     <>
